@@ -1,0 +1,1 @@
+The purpose of the project is to identify the binding of PRDM1 transcriptional factor across genome of NK cells and corrlated with gene expression and chromatin accessiblity change between two distinct growth groups.
