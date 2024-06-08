@@ -1,0 +1,3 @@
+dir_out: /coh_labs/jochan/PRDM1_NK
+dir_in: /coh_labs/jochan/PRDM1_NK/fastq
+intake: /coh_labs/jochan/PRDM1_NK/id/intakeFile_PRDM1_CHIP.tsv
