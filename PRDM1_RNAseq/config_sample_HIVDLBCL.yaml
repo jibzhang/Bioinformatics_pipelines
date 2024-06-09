@@ -1,0 +1,3 @@
+dir_out: /coh_labs/jochan/HIV_DLBCL_RNAseq
+dir_in: /coh_labs/jochan/HIV_DLBCL_RNAseq/fastq
+intake: /coh_labs/jochan/HIV_DLBCL_RNAseq/id/intake_HIVDLBCL_RNAseq.tsv
