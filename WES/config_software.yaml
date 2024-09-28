@@ -1,0 +1,98 @@
+threads_bwa: 4
+threads_Strelka: 8
+threads_lancet: 8
+threads_facets: 8
+
+gatk: gatk.422
+R: Rscript
+gatk: /home/zgu_labs/bin/software/gatk-4.1.9.0/gatk
+#R: /coh_labs/jochan/miniconda3/envs/bv/bin/Rscript
+vep: vep
+cdsDepth: /home/zgu_labs/bin/cdsDepth.pl
+filtmutation: /coh_labs/jochan/bin/2mutect2_vcf_filter.pl
+filtermutect: /coh_labs/jochan/bin/1.vcf_QC_Mutect2.pl
+filTPsnvcomp: /coh_labs/jochan/bin/2.2.snv_DvsG_cns.pl
+filTPindelcomp: /coh_labs/jochan/bin/2.2.indel_DvsG_cns.pl
+
+#ref_bwa: /coh_labs/jochan/reference_genome/hg19/hg19.all.fa
+ref_bwa: /home/zgu_labs/refData/genome/human/GRCh38/bwa/GRCh38.fa
+bowtie2_index: /ref_genomes/genome/human/GRCh38/bowtie2_index
+#ref_gatk: /coh_labs/jochan/reference_genome/hg19/hg19.all.fa
+ref_gatk: /home/zgu_labs/refData/genome/human/GRCh38/GRCh38.fa
+ref_gtf: /home/zgu_labs/refData/genome/human/GRCh38/gtf/Homo_sapiens.GRCh38.V100.withChr.gtf
+ref_annoation: /ref_genomes/genome_anno/human/refSeq/hg38/RefSeqAnno.hg38.txt
+ref_CNVkit: /coh_labs/jochan/reference/hg38_region/WGS_CNVkit_ref.cnn
+chromosome_sequences_dir: /ref_genomes/genome/human/GRCh38/chrs
+chromosome_lengths: /ref_genomes/genome/human/GRCh38/GRCh38.chrom.size
+copywriteR_helper: /home/zgu_labs/bin/software/copywriteR/GRCh38/hg38_20kb_chr
+blacklist: /coh_labs/jochan/reference/hg38_region/hg38_blacklist.v3.bed
+
+bcftools: /home/zgu_labs/bin/software/bcftools-1.11/bcftools
+bigBedToBed: /home/zgu_labs/bin/software/bigbed/bigBedToBed
+
+gatk_vqsr_ref_dir: /home/zgu_labs/refData/gatk/variantRecalibrator
+hapmap: /home/zgu_labs/refData/gatk/variantRecalibrator/resources_broad_hg38_v0_hapmap_3.3.hg38.vcf.gz
+omni: /home/zgu_labs/refData/gatk/variantRecalibrator/resources_broad_hg38_v0_1000G_omni2.5.hg38.vcf.gz
+g1000: /home/zgu_labs/refData/gatk/variantRecalibrator/resources_broad_hg38_v0_1000G_phase1.snps.high_confidence.hg38.vcf.gz
+dbsnp: /coh_labs/jochan/reference_genome/hg19/variantRecalibrator/dbsnp_138.hg19.vcf
+
+dbsnp_common: "/home/zgu_labs/refData/dbSNP/153_hg38/dbSnp153Common.bb"
+dbsnp_all: "/home/zgu_labs/refData/dbSNP/153_hg38/dbSnp153.bb"
+superdup: "/coh_labs/jochan/reference/hg38_region/genomicSuperDups.bed"
+
+gnomad_exome: "/home/zgu_labs/refData/gnomAD/gnomad.exomes.r2.1.1.sites.liftover_grch38.vcf.bgz"
+gnomad_genome: "/home/zgu_labs/refData/gnomAD/gnomad.genomes.r3.0.sites.vcf.bgz"
+
+#cds_list: /home/zgu_labs/refData/genome/human/GRCh38/cds/cds_region.intervals
+cds_bed: /ref_genomes/genome_anno/human/refSeq/hg38/CDS.hg38.bed
+cds_file: /ref_genomes/genome_anno/human/refSeq/hg38/CDS.hg38.txt
+cds_list: /ref_genomes/genome_anno/human/refSeq/hg38/CDS.hg38.bed
+cds_length: $HG38_CDSL
+
+target_bed: /coh_labs/jochan/reference_genome/Bedinterval/hg38_334gene_target_panel.bed
+target_length: 1974772
+
+funcotator_data_sources: /home/zgu_labs/refData/gatk/funcotator/funcotator_dataSources.v1.7.20200521g
+
+#Indel realigner
+# conda install -c bioconda gatk=3.8
+#java version: openjdk            pkgs/main/linux-64::openjdk-8.0.152-h7b6447c_3
+java_indelrealigner: /packages/java/jdk1.8.0_91/bin/java
+gatk_indelRealigner: /home/zgu_labs/bin/software/gatk-3.8.1/GenomeAnalysisTK.jar
+known_indelReligner: /ref_genomes/gatk/human/indel/resources_broad_hg38_v0_Homo_sapiens_assembly38.known_indels.vcf.gz
+
+#for base recalibrate
+known_baseRecalibrator: --known-sites /ref_genomes/gatk/human/baseRecalibrator/1000G_phase1.snps.high_confidence.hg38.vcf.gz --known-sites /ref_genomes/gatk/human/baseRecalibrator/dbsnp_146.hg38.vcf.gz --known-sites /ref_genomes/gatk/human/baseRecalibrator/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+
+#for mutect2
+mutect2_germline_resource: /ref_genomes/gatk/human/mutect2_pon/somatic-hg38_af-only-gnomad.hg38.vcf.gz
+mutect2_pon: /coh_labs/jochan/reference/gatk_ref/somatic-hg38_1000g_pon.hg38.vcf.gz
+sureselect_bait: /coh_labs/jochan/reference/Bedinterval/S07604624_Covered.interval_list
+sureselect_target: /coh_labs/jochan/reference/Bedinterval/S07604624_Regions.interval_list
+
+#for calculate contaminations
+common_germline_variant: /ref_genomes/gatk/human/calculateContamination/somatic-hg38_small_exac_common_3.hg38.vcf.gz
+
+#for FilterMutectCalls
+known_FilterMutectCalls: /scratch/zuhu/dbsnp/00-common_all.vcf.gz
+
+#for mutation call
+#java_indelrealigner: /coh_labs/jochan/miniconda3/bin/java
+varscan: /coh_labs/jochan/miniconda3/lib/VarScan.v2.3.9.jar
+
+dbsnp_cnvfacets: /ref_genomes/dbSNP/human/151_hg38/common_all_20180418.chr.vcf.gz
+vep_cache: /ref_genomes/genome_anno/human/vep
+facetscnv_gbuild: hg38
+
+cnvkit_target: /coh_labs/jochan/reference/CNVkit/SureSelectXT_All_Exon_V8_targets.bed
+cnvkit_antitarget: /coh_labs/jochan/reference/CNVkit/SureSelectXT_All_Exon_V8_antitargets.bed
+cnvkit_ref: /coh_labs/jochan/HIV_DLBCL/CNVkit/DLBCL_Reference.cnn
+cnvkit_ref_flat: /coh_labs/jochan/reference/CNVkit/FlatReference.cnn
+
+manta_region: /coh_labs/jochan/reference/hg38_region/Bedinterval/SureSelectXT_All_Exon_V8_Covered.bed.gz
+svaba_region: /coh_labs/jochan/reference/hg38_region/Bedinterval/SureSelectXT_All_Exon_V8_svaba.bed
+
+EBV_genome: /coh_labs/jochan/reference_genome/EBV/GCF_002402265.1_ASM240226v1_genomic.fa
+EBV_dict: /coh_labs/jochan/reference_genome/EBV/GCF_002402265.1_ASM240226v1_genomic.dict
+EBV_catalog: /coh_labs/jochan/reference_genome/EBV/RefSeq-release222.catalog.gz
+EBV_taxdump: /coh_labs/jochan/reference_genome/EBV/taxdump.tar.gz
