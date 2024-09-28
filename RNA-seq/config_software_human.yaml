@@ -1,0 +1,42 @@
+threads_star: 10
+threads_featureCounts: 1
+threads_fusioncatcher: 4
+threads_Cicero: 10
+threads_RNApeg: 10
+
+star: STAR
+gatk: gatk.422
+Cicero: /home/zgu_labs/bin/software/CICERO/CICERO-master/src/scripts/Cicero.sh
+fusioncatcher: /home/zgu_labs/anaconda3/envs/fusioncatcher/bin/fusioncatcher.py
+htseq-count: htseq-count
+R: Rscript
+python: /home/zgu_labs/anaconda3/envs/python
+cdsDepth: /home/zgu_labs/bin/cdsDepth.pl
+dexseq: /home/zgu_labs/anaconda3/pkgs/bioconductor-dexseq-1.36.0-r40_0/lib/R/library/DEXSeq/python_scripts/dexseq_count.py
+dexseq_gff: /ref_genomes/genome_anno/human/gtf/V102/Homo_sapiens.GRCh38.V102.withChr.dexseq.gff
+exon_gff: /ref_genomes/genome_anno/human/gtf/V102/Homo_sapiens.GRCh38.V102.withChr.Exon.gff
+
+#trust4
+trust4_vdjc: "/home/zgu_labs/bin/software/trust4/bcrtcr.fa"
+trust4_imgt: "/home/zgu_labs/bin/software/trust4/IMGT+C.fa"
+
+ref_star: /ref_genomes/genome/human/GRCh38/index_star
+ref_star_EBV: /coh_labs/jochan/reference_genome/hg38/STAR_index_with_EBV_HIV
+ref_star_rat: /coh_labs/jochan/reference_genome/Rattus_ensembl_107/STAR_index
+ref_Flat: /coh_labs/jochan/reference_genome/hg38/refFlat.txt
+ref_gtf: /ref_genomes/genome_anno/human/gtf/V102/Homo_sapiens.GRCh38.V102.withChr.gtf
+EBV_gtf: /coh_labs/jochan/reference_genome/hg38/Ensembl/Homo_sapiens.GRCh38.104_EBV_HIV.gtf
+rat_gtf: /home/jibzhang/reference/Rattus_ensembl_107/Rattus_norvegicus.mRatBN7.2.107.gtf
+ref_gatk: /ref_genomes/genome/human/GRCh38/GRCh38.fa
+ref_EBV: /coh_labs/jochan/reference_genome/hg38/Ensembl/Homo_sapiens.GRCh38.with_EBV_HIV.fa
+ref_fusioncatcher: /ref_genomes/fusioncatcher/human_v102_new/human_v102
+ref_Cicero: /ref_genomes/CICERO/human/GRCh38/reference
+dexseq_gff: /ref_genomes/genome_anno/human/gtf/V102/Homo_sapiens.GRCh38.V102.withChr.dexseq.gff
+
+ref1_RNApeg: /ref_genomes/CICERO/human/GRCh38/reference/Homo_sapiens/GRCh38_no_alt/FASTA/GRCh38_no_alt.fa
+ref2_RNApeg: /ref_genomes/CICERO/human/GRCh38/reference/Homo_sapiens/GRCh38_no_alt/mRNA/RefSeq/refFlat.txt
+dir_ref_RNApeg: /ref_genomes/CICERO/human/GRCh38/reference/Homo_sapiens/GRCh38_no_alt/mRNA/RefSeq,/ref_genomes/CICERO/human/GRCh38/reference/Homo_sapiens/GRCh38_no_alt/FASTA
+
+cds_bed: /ref_genomes/genome_anno/human/refSeq/hg38/CDS.hg38.bed
+cds_list: /ref_genomes/genome_anno/human/refSeq/hg38/CDS.hg38.bed
+cds_length: $HG38_CDSL
