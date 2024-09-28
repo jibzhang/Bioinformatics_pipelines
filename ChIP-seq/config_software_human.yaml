@@ -1,0 +1,10 @@
+threads_bwa: 4
+threads_trimmomatic: 4
+threads_bowtie2: 4
+threads_featureCounts: 4
+gatk: gatk.422
+chrom_sizes: /ref_genomes/genome/human/GRCh38/GRCh38.chrom.size
+bowtie2_index: /ref_genomes/genome/human/GRCh38/bowtie2_index/index/genome
+ref_bwa: /home/zgu_labs/refData/genome/human/GRCh38/bwa/GRCh38.fa
+ref_gtf: /ref_genomes/genome_anno/human/gtf/V102/Homo_sapiens.GRCh38.V102.withChr.gtf
+ref_gatk: /ref_genomes/genome/human/GRCh38/GRCh38.fa
