@@ -1,0 +1,4 @@
+intake: /coh_labs/jochan/CD4_TET2KO_RRBS/id/intakeFile_TET2_RRBS.tsv
+dir_out: /coh_labs/jochan/CD4_TET2KO_RRBS
+dir_in: /coh_labs/jochan/CD4_TET2KO_RRBS/fastq
+dir_hmedip: /coh_labs/jochan/CD4_TET2KO_methylation

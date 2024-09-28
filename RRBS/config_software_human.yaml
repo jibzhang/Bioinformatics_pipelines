@@ -1,0 +1,5 @@
+threads_bowtie2: 4
+threads_bismark: 6
+bismark_index: /coh_labs/jochan/reference_genome/hg38
+ref_human: /home/zgu_labs/refData/genome/human/GRCh38/GRCh38.fa
+gatk: /home/zgu_labs/bin/software/gatk-4.1.9.0/gatk
