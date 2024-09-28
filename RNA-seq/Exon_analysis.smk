@@ -1,9 +1,3 @@
-#cd /ref_genomes/genome_anno/human/gtf/V102
-#python \
-#/home/zgu_labs/anaconda3/pkgs/bioconductor-dexseq-1.36.0-r40_0/lib/R/library/DEXSeq/python_scripts/dexseq_prepare_annotation.py -r no \
-#    Homo_sapiens.GRCh38.V102.withChr.gtf \
-#    Homo_sapiens.GRCh38.V102.withChr.HTseqExon.gff
-
 rule Transform:
     input:
         bmk=dir_out+"/temp/"+squence_type+"/log/star/{sample}_star.bmk",
