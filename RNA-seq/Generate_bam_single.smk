@@ -2,8 +2,7 @@ rule trimmomatic:
     input:
         fq=lambda wildcards: expand(dir_in + '/{i}',i=fq[wildcards.bamTmp])
     output:
-        fq1 = dir_out + "/temp/fq_trimed/{bamTmp}_1.fq.gz",
-        fq2 = dir_out + "/temp/fq_trimed/{bamTmp}_2.fq.gz"
+        fq1=dir_out + "/fq_trimed/" + squence_type + "/{bamTmp}_1.fq.gz"
     log:
         dir_out+"/temp/"+squence_type+"/log/trimmomatic/{bamTmp}_trimmomatic.log"
     benchmark:
@@ -14,28 +13,23 @@ rule trimmomatic:
         dir_tem=dir_out + "/temp/" + squence_type + "/trimmomatic",
         usetrimfq="yes",
         paired1=dir_out + "/temp/" + squence_type + "/trimmomatic/{bamTmp}_R1.paired.fq.gz",
-        paired2 = dir_out + "/temp/" + squence_type + "/trimmomatic/{bamTmp}_R2.paired.fq.gz",
-        unpaired1 = dir_out + "/temp/" + squence_type + "/trimmomatic/{bamTmp}_R1.unpaired.fq.gz",
-        unpaired2 = dir_out + "/temp/" + squence_type + "/trimmomatic/{bamTmp}_R2.unpaired.fq.gz",
         fq1_raw=dir_in + "/{bamTmp}_R1.fq.gz",
-        fq2_raw=dir_in + "/{bamTmp}_R2.fq.gz"
     threads:
         config["threads_star"]
     shell:
         '''
         if [ ! -d "{params.dir_tem}" ]; then mkdir {params.dir_tem}; fi
         if [ "{params.usetrimfq}" == "yes" ] ; then
-        trimmomatic PE -threads {threads} {input} {params.paired1} {params.unpaired1} {params.paired2} {params.unpaired2} {params.trimpara1} {params.trimpara2} &> {log};
-        ln -s {params.paired1} {output.fq1};ln -s {params.paired2} {output.fq2};
+        trimmomatic SE -threads {threads} {input} {params.paired1} {params.trimpara1} {params.trimpara2} &> {log};
+        ln -s {params.paired1} {output.fq1};
         else
-        ln -s {params.fq1_raw} {output.fq1};ln -s {params.fq2_raw} {output.fq2};
+        ln -s {params.fq1_raw} {output.fq1};
         fi
         '''
 
 rule Star:
     input:
         fq1=rules.trimmomatic.output.fq1,
-        fq2=rules.trimmomatic.output.fq2,
         bmk=dir_out + "/temp/" + squence_type + "/log/trimmomatic/{bamTmp}_trimmomatic.bmk"
     output:
         bam=dir_out+"/temp/"+squence_type+"/star/{bamTmp}.bam",
@@ -46,7 +40,7 @@ rule Star:
         dir_out+"/temp/"+squence_type+"/log/star/{bamTmp}_star.bmk"
     params:
         star=config["star"],
-        star_ref=config["ref_star_EBV"],
+        star_ref=config["ref_star"],
         rg=lambda wildcards: rg[wildcards.bamTmp],
         dir_out=dir_out+"/temp/"+squence_type+"/{bamTmp}/star/",
         bam_tmp=dir_out+"/temp/"+squence_type+"/{bamTmp}/star/Aligned.out.bam",
@@ -69,7 +63,7 @@ rule Star:
         --outSAMattributes NH HI AS nM NM MD \
         --outSAMattrRGline {params.rg} \
         --outFilterType BySJout \
-        --outFilterMultimapNmax 20 \
+        --outFilterMultimapNmax 100 \
         --winAnchorMultimapNmax 200 \
         --outFilterMismatchNmax 4 \
         --outFilterMismatchNoverReadLmax 0.04 \
@@ -93,7 +87,7 @@ rule Star:
         --outFileNamePrefix {params.dir_out} \
         --genomeDir {params.star_ref} \
         --genomeLoad NoSharedMemory \
-        --readFilesIn {input.fq1} {input.fq2}\
+        --readFilesIn {input.fq1} \
         --sjdbOverhang 100 &> {log}
         mv {params.bam_tmp} {output.bam}
         '''
@@ -146,9 +140,8 @@ rule MarkDup:
         bmk=rules.samtools_sort.benchmark
     output:
         bam=dir_out+"/{sample}/"+squence_type+"/bam/{sample}.bam",
-        bai=dir_out+"/{sample}/"+squence_type+"/bam/{sample}.bam.bai",
-        metrics=dir_out+"/{sample}/"+squence_type+"/bam/{sample}.MarkDup.metrics.txt",
-        stats= dir_out + "/{sample}/" + squence_type + "/bam/{sample}.chr.readcounts.txt"
+        bai=dir_out+"/{sample}/"+squence_type+"/bam/{sample}.bai",
+        metrics=dir_out+"/{sample}/"+squence_type+"/bam/{sample}.MarkDup.metrics.txt"
     log:
         dir_out+"/{sample}/"+squence_type+"/log/{sample}_markDup.log"
     benchmark:
@@ -159,33 +152,7 @@ rule MarkDup:
         '''
         {params.gatk} MarkDuplicates -I {input.bam} -O {output.bam} -M {output.metrics} &> {log}
         samtools index {output.bam} {output.bai} &>> {log}
-        samtools idxstats {output.bam} | cut -f 1,3 > {output.stats}
         '''
-
-# rule pathseq:
-#     input:
-#         bam =  dir_out + "/{sample}/" + squence_type + "/bam/{sample}.bam",
-#         human_image = rules.creatimage.output.human_ima,
-#         ebv_image = rules.creatimage.output.ebv_ima,
-#         ebv_dict = config["EBV_dict"],
-#         kmer = rules.buildkmer.output,
-#         ebv_ref= config["EBV_genome"],
-#         taxonomy = rules.Taxonomy.output
-#     output:
-#         bam = dir_out + "/{sample}/" + squence_type + "/pathoseq/{sample}.bam",
-#         score = dir_out + "/{sample}/" + squence_type + "/pathoseq/{sample}.score.txt",
-#         filter_metrics = dir_out + "/{sample}/" + squence_type + "/pathoseq/{sample}.filter_metrics.txt",
-#         score_metrics = dir_out + "/{sample}/" + squence_type + "/pathoseq/{sample}.score_metrics.txt"
-#     log:
-#         dir_out + "/{sample}/" + squence_type + "/log/{sample}_pathoseq.log"
-#     benchmark:
-#         dir_out + "/{sample}/" + squence_type + "/log/{sample}_pathoseq.bmk"
-#     shell:
-#         '''
-#         gatk.422 PathSeqPipelineSpark --input {input.bam} --kmer-file {input.kmer} --filter-bwa-image {input.human_image} --microbe-bwa-image {input.ebv_image} \
-#         --microbe-dict {input.ebv_dict} --taxonomy-file {input.taxonomy} --min-clipped-read-length 50 --min-score-identity 0.90 --identity-margin 0.02 \
-#         --scores-output {output.score} --output {output.bam} --filter-metrics {output.filter_metrics} --score-metrics {output.score_metrics}
-#         '''
 
 rule make_bigwig:
     input:
@@ -214,7 +181,7 @@ rule TE_count:
         dir_out + "/{sample}/" + squence_type + "/log/{sample}.TEcount.bmk"
     params:
         gtf = config["ref_gtf"],
-        TE_gtf = "/coh_labs/jochan/reference/hg38_region/hg38_rmsk_TE_20200804.gtf",
+        TE_gtf = "/home/jibzhang/reference/hg38_region/hg38_rmsk_TE_20200804.gtf",
         outdir = dir_out + "/{sample}/" + squence_type + "/TEcount"
     shell:
         '''
